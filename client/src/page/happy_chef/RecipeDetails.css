@@ -1,0 +1,11 @@
+.chef-ai-recipe {
+  max-width: 590px;
+  margin: auto;
+  padding: 10px 30px;
+  font-family: Inter, sans-serif;
+}
+.chef-ai-recipe div {
+  background-color: #f0efeb;
+  padding: 10px 28px;
+  border-radius: 8px;
+}

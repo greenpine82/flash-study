@@ -1,0 +1,73 @@
+.login-page {
+  height: 100vh;
+  background-color: #f2f4f7;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.login-container {
+  border: none;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 20px;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.login-form input {
+  border: 1px solid #dddfe2;
+  border-radius: 6px;
+  font-size: 17px;
+  padding: 14px 16px;
+}
+.login-form input:focus {
+  border: 1px solid #1877f2;
+  outline: none;
+}
+.login-form button {
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background-color: #1877f2;
+  color: #fff;
+  font-size: 20px;
+  line-height: 48px;
+}
+.hr-text {
+  width: 100%;
+  line-height: 1em;
+  position: relative;
+  outline: none;
+  border: none;
+  text-align: center;
+  height: 1.5em;
+  opacity: 0.75;
+}
+.hr-text::before {
+  content: '';
+  background: linear-gradient(to right, transparent, #818078, transparent);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+}
+.hr-text::after {
+  content: attr(data-content);
+  position: relative;
+  display: inline-block;
+  color: #818078;
+  background-color: #fff;
+  padding: 0 0.5em;
+  line-height: 1.5em;
+}

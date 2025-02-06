@@ -1,0 +1,55 @@
+@import "../../css/animation/fade-transition"
+
+.flash-card-deck
+  position relative
+  max-width 590px
+  margin: auto
+  padding 10px 30px
+  font-family Inter, sans-serif
+  .control
+    position absolute
+    opacity 0
+    &:hover
+      opacity 1
+    width 100%
+    height 100%
+    top 0
+    left 0
+    z-index: 1001
+    .button
+      position absolute
+      top 50%
+      width 3rem
+      height 3rem
+      transform translateY(-50%)
+      border-radius 50%
+      background-color rgba(0 0 0 .24)
+      &::after
+        content: " "
+        position: absolute
+        width: 10px
+        height: 10px
+        top: 50%
+        border-right: 2px solid #fff
+        border-bottom: 2px solid #fff
+
+    .prev
+      left 0
+      &::after
+        left: 54%
+        transform: translate(-50%, -50%) rotate(135deg);
+    .next
+      right 0
+      &::after
+        left: 47%
+        transform: translate(-50%, -50%) rotate(-45deg);
+    .button-export
+      position absolute
+      padding 0.4rem
+      cursor pointer
+      border-radius 6px
+      color white
+      top 0
+      right 0
+      transform translate(-70%, 50%)
+      background-color rgba(0 0 0 .24)

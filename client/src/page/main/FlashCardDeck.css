@@ -1,0 +1,234 @@
+.fade-out-left {
+  animation: fadeOutLeft 0.5s 1;
+}
+.fade-in-left {
+  animation: fadeInLeft 0.5s 1;
+}
+.fade-out-right {
+  animation: fadeOutRight 0.5s 1;
+}
+.fade-in-right {
+  animation: fadeInRight 0.5s 1;
+}
+@-moz-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+}
+@-webkit-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+}
+@-o-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+}
+@keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+}
+@-moz-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@-o-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+}
+@-webkit-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+}
+@-o-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+}
+@keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+}
+@-moz-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@-o-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.flash-card-deck {
+  position: relative;
+  max-width: 590px;
+  margin: auto;
+  padding: 10px 30px;
+  font-family: Inter, sans-serif;
+}
+.flash-card-deck .control {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+}
+.flash-card-deck .control:hover {
+  opacity: 1;
+}
+.flash-card-deck .control .button {
+  position: absolute;
+  top: 50%;
+  width: 3rem;
+  height: 3rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.24);
+}
+.flash-card-deck .control .button::after {
+  content: " ";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+.flash-card-deck .control .prev {
+  left: 0;
+}
+.flash-card-deck .control .prev::after {
+  left: 54%;
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+.flash-card-deck .control .next {
+  right: 0;
+}
+.flash-card-deck .control .next::after {
+  left: 47%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.flash-card-deck .control .button-export {
+  position: absolute;
+  padding: 0.4rem;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #fff;
+  top: 0;
+  right: 0;
+  transform: translate(-70%, 50%);
+  background-color: rgba(0,0,0,0.24);
+}
