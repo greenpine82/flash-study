@@ -1,1 +1,1 @@
-# ai-boost-camp
+# ai-build-camp
