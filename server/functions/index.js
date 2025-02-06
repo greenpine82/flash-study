@@ -23,10 +23,10 @@ import  { defineSecret } from 'firebase-functions/params';
 const geminiKey = defineSecret('GREENPINE82_GEMINI_KEY');
 const claudeKey = defineSecret('GREENPINE82_CLAUDE_KEY');
 
-const CORS = ['http://localhost:5173', 'https://greenpine82.site']
+import { GoogleAIClient } from "./modules/google-ai.js";
+import { ClaudeAIClient } from "./modules/claude-ai.js";
 
-import { GoogleAI } from "./modules/google-ai.js";
-import { ClaudeAI } from "./modules/claude-ai.js";
+const CORS = ['http://localhost:5173', 'https://greenpine82.site']
 
 export const getRecipe = onCall(
     {
@@ -35,9 +35,9 @@ export const getRecipe = onCall(
     },
     async (request) => {
         try {
-            let ingredients = request.data.ingredients.join(", ");
-            ClaudeAI.init(claudeKey.value())
-            return await ClaudeAI.createRecipe(ingredients);
+            const AI = new ClaudeAIClient(claudeKey.value())
+            const ingredients = request.data.ingredients.join(", ");
+            return await AI.createRecipe(ingredients);
         }
         catch (error) {
             logger.error(error);
@@ -53,10 +53,12 @@ export const getFlashCard = onCall(
     },
     async (request) => {
         try {
-            let pdfFile = request.data.file;
+            const AI = new GoogleAIClient(geminiKey.value())
+            const pdfFile = request.data.file;
             logger.info(pdfFile);
-            GoogleAI.init(geminiKey.value())
-            return await GoogleAI.createFlashCardFromPDF(pdfFile);
+            const result = await AI.createFlashCardFromPDF(pdfFile);
+            logger.info(result);
+            return result;
         }
         catch (error) {
             logger.error(error);
