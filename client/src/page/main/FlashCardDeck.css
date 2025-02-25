@@ -179,7 +179,6 @@
 }
 .flash-card-deck .control {
   position: absolute;
-  opacity: 0;
   width: 100%;
   height: 100%;
   top: 0;
@@ -187,7 +186,7 @@
   z-index: 1001;
 }
 .flash-card-deck .control:hover {
-  opacity: 1;
+  opacity: 1 !important;
 }
 .flash-card-deck .control .button {
   position: absolute;
@@ -229,6 +228,17 @@
   color: #fff;
   top: 0;
   right: 0;
-  transform: translate(-70%, 50%);
+  transform: translate(-70%, 60%);
+  background-color: rgba(0,0,0,0.24);
+}
+.flash-card-deck .control .button-save {
+  position: absolute;
+  padding: 0.4rem;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #fff;
+  top: 0;
+  right: 0;
+  transform: translate(-220%, 60%);
   background-color: rgba(0,0,0,0.24);
 }

@@ -1,4 +1,11 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, browserSessionPersistence, setPersistence } from 'firebase/auth';
+import {
+    getAuth,
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    browserSessionPersistence,
+    setPersistence
+} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getFunctions, httpsCallable } from "firebase/functions";
 
@@ -14,10 +21,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-const functions = getFunctions(app, "asia-east1");
-export const getRecipe = httpsCallable(functions, 'getRecipe');
-export const getFlashCard = httpsCallable(functions, 'getFlashCard');
-
 const auth = getAuth(app);
 const  provider = new GoogleAuthProvider();
 export const signInWithGoogle = async () => {
@@ -25,4 +28,29 @@ export const signInWithGoogle = async () => {
     return await signInWithPopup(auth, provider);
 }
 
+export const signIn = async (user, pass) => {
+    await setPersistence(auth, browserSessionPersistence);
+    return await signInWithEmailAndPassword(auth, user, pass);
+}
+
 export const getCurrentAuth = () => auth;
+
+const functions = getFunctions(app, "asia-east1");
+export const getRecipe = httpsCallable(functions, 'getRecipe');
+
+function toObject(str) {
+    const jsonString = str.replace("```json", "").replace("```", "");
+    return JSON.parse(jsonString);
+}
+
+const getFlashCard = httpsCallable(functions, 'getFlashCard');
+export const createFlashCard = async (base64) => {
+    let result = await getFlashCard({ file: base64 });
+    return toObject(result.data);
+}
+
+const getFillBlankQuestions = httpsCallable(functions, 'getFillBlankQuestions');
+export const createFillBlankQuestions = async (construct_response_question) => {
+    let result = await getFillBlankQuestions({ questions: construct_response_question });
+    return toObject(result.data);
+}

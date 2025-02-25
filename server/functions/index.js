@@ -54,11 +54,26 @@ export const getFlashCard = onCall(
     async (request) => {
         try {
             const AI = new GoogleAIClient(geminiKey.value())
-            const pdfFile = request.data.file;
-            logger.info(pdfFile);
-            const result = await AI.createFlashCardFromPDF(pdfFile);
-            logger.info(result);
-            return result;
+            const file = request.data.file;
+            return await AI.createFlashCardFromFile(file);
+        }
+        catch (error) {
+            logger.error(error);
+            throw new HttpsError("unknown", error.toString());
+        }
+    }
+)
+
+export const getFillBlankQuestions = onCall(
+    {
+        cors: CORS,
+        secrets: [geminiKey]
+    },
+    async (request) => {
+        try {
+            const AI = new GoogleAIClient(geminiKey.value())
+            const questions = request.data.questions;
+            return await AI.convertToFillBlankQuestions(questions);
         }
         catch (error) {
             logger.error(error);

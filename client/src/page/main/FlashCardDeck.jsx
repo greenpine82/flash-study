@@ -3,6 +3,7 @@ import FlipCard from "../../components/FlipCard.jsx";
 import {realDOM} from "../../modules/common/real_dom.js";
 import { animate } from "../../modules/common/animation.js";
 import { exportAnkiDeck } from "../../modules/anki/anki-export.js";
+import {saveFile} from "../../modules/common/file.js";
 
 const FlashCardDeck = (props) => {
     const $ = realDOM(props);
@@ -20,7 +21,10 @@ const FlashCardDeck = (props) => {
         let nextCard = $.get(flashCards[nextIndex])
         let number = $.getByRef(ref)
 
-        const start = () => { card?.classList.add(exit); };
+        const start = () => {
+            card?.classList.remove('flipped');
+            card?.classList.add(exit);
+        };
         const end = () => {
             card?.classList.remove(exit)
             card?.setAttribute('hidden', '');
@@ -58,10 +62,15 @@ const FlashCardDeck = (props) => {
         e.stopPropagation();
         await exportAnkiDeck(data);
     }
+    const saveToFile = e => {
+        e.stopPropagation();
+        saveFile(JSON.stringify(data), 'questions.json', 'text/plain');
+    }
     let control =
         <div
             onClick={clickHandler}
             className="control"
+            style={{opacity: OpacityValue}}
         >
             <div
                 className="button prev"
@@ -72,6 +81,12 @@ const FlashCardDeck = (props) => {
                 className="button next"
                 onClick={nextCard}
             />
+            <div
+                className="button-save"
+                onClick={saveToFile}
+            >
+                Save
+            </div>
             <div
                 className="button-export"
                 onClick={exportFile}
@@ -87,3 +102,13 @@ const FlashCardDeck = (props) => {
     )
 }
 export default FlashCardDeck;
+
+function isMobile() {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        // true for mobile device
+        return true;
+    }
+    return false;
+}
+
+const OpacityValue =  isMobile() ? 1 : 0

@@ -16,6 +16,10 @@
   backface-visibility: hidden;
   box-sizing: border-box;
   padding: 50px 50px;
+  overflow-y: auto;
+  --can-scroll: 0; /* initial = false */
+  animation: detect-scroll;
+  animation-timeline: scroll(self);
 }
 .flip-card div p {
   user-select: none;
@@ -27,4 +31,28 @@
 }
 .flip-card .back p {
   color: #fff;
+}
+@-moz-keyframes detect-scroll {
+  from, to {
+    overflow-y: hidden;
+    --can-scroll: 1; /* space = true */
+  }
+}
+@-webkit-keyframes detect-scroll {
+  from, to {
+    overflow-y: hidden;
+    --can-scroll: 1; /* space = true */
+  }
+}
+@-o-keyframes detect-scroll {
+  from, to {
+    overflow-y: hidden;
+    --can-scroll: 1; /* space = true */
+  }
+}
+@keyframes detect-scroll {
+  from, to {
+    overflow-y: hidden;
+    --can-scroll: 1; /* space = true */
+  }
 }

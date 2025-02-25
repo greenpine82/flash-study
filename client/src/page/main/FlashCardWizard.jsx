@@ -9,6 +9,18 @@ import LearningMaterialList from "./LearningMaterialList.jsx";
 import FlashCardDeck from "./FlashCardDeck.jsx";
 import {getCurrentAuth} from "../../modules/server-side-api.js";
 
+let self = {}
+
+const template = () =>
+    <>
+        <Header
+            title="Flash Study"
+            logo={logo}
+        />
+        <LearningMaterialList records={self.records} />
+        { self.cards?.length > 0 ? <FlashCardDeck data={self.cards} /> : null }
+    </>
+
 const FlashCardWizard = () => {
     const navigate = useNavigate();
     const auth = getCurrentAuth();
@@ -21,19 +33,10 @@ const FlashCardWizard = () => {
         })
     }, [auth, navigate]);
 
-    let records = useRecords('questions');
-    let cards = useSyncExternalStore(...records.getHooks('questions'));
+    self.records = useRecords('questions');
+    self.cards = useSyncExternalStore(...self.records.getHooks('questions'));
 
-    return (
-        <>
-            <Header
-                title="Flash Card Wizard"
-                logo={logo}
-            />
-            <LearningMaterialList records={records} />
-            { cards?.length > 0 ? <FlashCardDeck data={cards} /> : null }
-        </>
-    )
+    return template()
 }
 
 export default FlashCardWizard;

@@ -8,18 +8,34 @@ export class GoogleAIClient {
         this.model = this.geminiAI.getGenerativeModel({ model: 'models/gemini-1.5-flash' });
     }
 
-    async createFlashCardFromPDF(file) {
+    async convertToFillBlankQuestions(questions) {
+        const str = questions.map(item => `Question:\n${item['Q']}\nAnswer:\n${item['A']}`);
+        const content = str.join('\n');
+        const prompt =
+            `Convert below Q&A items to Fill-in-the-Blanks questions in JSON format which has 2 fields "Q" as string and "A" as array.\n` +
+            content;
+        const result = await this.model.generateContent([
+            prompt
+        ]);
+
+        logger.info(result.response.text());
+
+        return result.response.text();
+    }
+
+    async createFlashCardFromFile(file) {
         const prompt = `Provide constructed-response questions in JSON format which has 2 fields "Q" and "A".`
         const result = await this.model.generateContent([
             {
                 inlineData: {
                     data: file.base64,
-                    mimeType: "application/pdf",
+                    mimeType: file.type
                 },
             },
             prompt,
         ]);
         logger.info(result.response.text());
+
         return result.response.text();
     }
 

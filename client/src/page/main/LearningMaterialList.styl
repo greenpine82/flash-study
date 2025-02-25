@@ -12,18 +12,22 @@
       opacity 0
     label
       padding 0
-      div
-        border 1px dotted
+      display flex
+      justify-content center
+      .input-area
+        border 1px dashed
         border-color #6B7280
         border-radius 16px
-        h3
-          text-align center
-          color #6B7280
-          margin 0.5rem
-        h3.symbol
-          font-size 8rem
-          line-height 9rem
-          font-weight lighter
+        padding 1rem
+        .input-symbol
+          min-height 8rem
+          min-width 8rem
+          background-image url("../../assets/add-file.svg")
+          background-position center
+          background-repeat no-repeat
+          background-size contain
+          background-origin content-box
+
         ul
           margin 8px 0
           li

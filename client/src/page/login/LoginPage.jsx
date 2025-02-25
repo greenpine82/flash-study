@@ -1,5 +1,7 @@
 import './LoginPage.css';
 import GoogleLoginButton from "../../components/GoogleLoginButton.jsx";
+import { useNavigate } from 'react-router-dom';
+import { signIn } from "../../modules/server-side-api.js";
 
 const LoginPage = () => {
     const cls_name_page = "login-page";
@@ -18,15 +20,31 @@ const LoginPage = () => {
 export default LoginPage;
 
 const LoginForm = () => {
+    const navigate = useNavigate();
+    const logIn = async (e) => {
+        e.preventDefault();
+        let formElement = e.currentTarget;
+        const id = new FormData(formElement).get('id');
+        const pass = new FormData(formElement).get('password');
+        try {
+            const result = await signIn(id, pass);
+            navigate('/main');
+        } catch (error) {
+            prompt(error.message);
+        }
+    };
     return (
-        <form className="login-form">
+        <form
+            className="login-form"
+            onSubmit={logIn}
+        >
             <input
                 type="text"
                 placeholder="ID"
                 name="id"
             />
             <input
-                type="text"
+                type="password"
                 placeholder="Password"
                 name="password"
             />

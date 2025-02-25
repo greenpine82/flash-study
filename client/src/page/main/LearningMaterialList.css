@@ -61,26 +61,28 @@
 }
 .learning-material-list .material-list label {
   padding: 0;
+  display: flex;
+  justify-content: center;
 }
-.learning-material-list .material-list label div {
-  border: 1px dotted;
+.learning-material-list .material-list label .input-area {
+  border: 1px dashed;
   border-color: #6b7280;
   border-radius: 16px;
+  padding: 1rem;
 }
-.learning-material-list .material-list label div h3 {
-  text-align: center;
-  color: #6b7280;
-  margin: 0.5rem;
+.learning-material-list .material-list label .input-area .input-symbol {
+  min-height: 8rem;
+  min-width: 8rem;
+  background-image: url("../../assets/add-file.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-origin: content-box;
 }
-.learning-material-list .material-list label div h3.symbol {
-  font-size: 8rem;
-  line-height: 9rem;
-  font-weight: lighter;
-}
-.learning-material-list .material-list label div ul {
+.learning-material-list .material-list label .input-area ul {
   margin: 8px 0;
 }
-.learning-material-list .material-list label div ul li {
+.learning-material-list .material-list label .input-area ul li {
   color: #6b7280;
   line-height: 19px;
   padding-block: 5px;
