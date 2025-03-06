@@ -1,4 +1,4 @@
-# ai-build-camp
+# flash-study
 
 ## Product Overview
 
