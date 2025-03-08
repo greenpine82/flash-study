@@ -48,29 +48,29 @@
     background-position: 0 50%;
   }
 }
-.learning-material-list {
+.main {
   max-width: 590px;
   margin: auto;
   padding: 0 30px;
   font-family: Inter, sans-serif;
 }
-.learning-material-list .material-list input {
+.main .container input {
   width: 0;
   height: 0;
   opacity: 0;
 }
-.learning-material-list .material-list label {
+.main .container label {
   padding: 0;
   display: flex;
   justify-content: center;
 }
-.learning-material-list .material-list label .input-area {
+.main .container label .area {
   border: 1px dashed;
   border-color: #6b7280;
   border-radius: 16px;
   padding: 1rem;
 }
-.learning-material-list .material-list label .input-area .input-symbol {
+.main .container label .area .symbol {
   min-height: 8rem;
   min-width: 8rem;
   background-image: url("../../assets/add-file.svg");
@@ -79,22 +79,22 @@
   background-size: contain;
   background-origin: content-box;
 }
-.learning-material-list .material-list label .input-area ul {
+.main .container label .area ul {
   margin: 8px 0;
 }
-.learning-material-list .material-list label .input-area ul li {
+.main .container label .area ul li {
   color: #6b7280;
   line-height: 19px;
   padding-block: 5px;
 }
-.learning-material-list .prompt {
+.main .prompt {
   margin-top: 10px;
   padding: 10px 28px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.learning-material-list .prompt .generate-button {
+.main .prompt button {
   border-radius: 6px;
   border: none;
   background-color: #ff7f50;

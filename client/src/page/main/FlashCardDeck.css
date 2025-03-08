@@ -177,7 +177,7 @@
   padding: 10px 30px;
   font-family: Inter, sans-serif;
 }
-.flash-card-deck .control {
+.flash-card-deck .buttons {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -185,10 +185,10 @@
   left: 0;
   z-index: 1001;
 }
-.flash-card-deck .control:hover {
+.flash-card-deck .buttons:hover {
   opacity: 1 !important;
 }
-.flash-card-deck .control .button {
+.flash-card-deck .buttons .round {
   position: absolute;
   top: 50%;
   width: 3rem;
@@ -197,7 +197,7 @@
   border-radius: 50%;
   background-color: rgba(0,0,0,0.24);
 }
-.flash-card-deck .control .button::after {
+.flash-card-deck .buttons .round::after {
   content: " ";
   position: absolute;
   width: 10px;
@@ -206,21 +206,21 @@
   border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;
 }
-.flash-card-deck .control .prev {
+.flash-card-deck .buttons .prev {
   left: 0;
 }
-.flash-card-deck .control .prev::after {
+.flash-card-deck .buttons .prev::after {
   left: 54%;
   transform: translate(-50%, -50%) rotate(135deg);
 }
-.flash-card-deck .control .next {
+.flash-card-deck .buttons .next {
   right: 0;
 }
-.flash-card-deck .control .next::after {
+.flash-card-deck .buttons .next::after {
   left: 47%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-.flash-card-deck .control .button-export {
+.flash-card-deck .buttons .export {
   position: absolute;
   padding: 0.4rem;
   cursor: pointer;
@@ -231,7 +231,7 @@
   transform: translate(-70%, 60%);
   background-color: rgba(0,0,0,0.24);
 }
-.flash-card-deck .control .button-save {
+.flash-card-deck .buttons .save {
   position: absolute;
   padding: 0.4rem;
   cursor: pointer;

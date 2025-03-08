@@ -1,25 +1,67 @@
 import './FlashCardDeck.css'
+
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+const OpacityValue = isMobile() ? 1 : 0
+let self = {}
+
+const template = () =>
+    <section className='flash-card-deck'>
+        {self.flashCards}
+        {buttons()}
+    </section>
+
+const buttons = () =>
+    <div
+        onClick={self.clickHandler}
+        className="buttons"
+        style={{opacity: OpacityValue}}
+    >
+        <div
+            className="round prev"
+            onClick={self.prevCard}
+        />
+        <h5 {...self.ref} hidden>{`${self.index + 1} / ${self.flashCards.length}`}</h5>
+        <div
+            className="round next"
+            onClick={self.nextCard}
+        />
+        <div
+            className="save"
+            onClick={self.saveToFile}
+        >
+            Save
+        </div>
+        <div
+            className="export"
+            onClick={self.exportFile}
+        >
+            Export
+        </div>
+    </div>
+
 import FlipCard from "../../components/FlipCard.jsx";
 import {realDOM} from "../../modules/common/real_dom.js";
-import { animate } from "../../modules/common/animation.js";
-import { exportAnkiDeck } from "../../modules/anki/anki-export.js";
+import {animate} from "../../modules/common/animation.js";
+import {exportAnkiDeck} from "../../modules/anki/anki-export.js";
 import {saveFile} from "../../modules/common/file.js";
 
 const FlashCardDeck = (props) => {
     const $ = realDOM(props);
-    const ref = $.useRef();
-    const { data } = props;
-    const cls_name = 'flash-card-deck';
-    let index = 0;
-    let flashCards = data.map((item, i) => {
+    self.ref = $.useRef();
+    const {data} = props;
+    self.index = 0;
+    self.flashCards = data.map((item, i) => {
         return $.create(<FlipCard key={i} font={item['Q']} back={item['A']} display={i === 0}/>)
     })
 
     const transition = (exit, enter, getNext) => {
-        let nextIndex = getNext(index);
-        let card = $.get(flashCards[index])
-        let nextCard = $.get(flashCards[nextIndex])
-        let number = $.getByRef(ref)
+        let nextIndex = getNext(self.index);
+        let card = $.get(self.flashCards[self.index])
+        let nextCard = $.get(self.flashCards[nextIndex])
+        let number = $.getByRef(self.ref)
 
         const start = () => {
             card?.classList.remove('flipped');
@@ -33,82 +75,42 @@ const FlashCardDeck = (props) => {
             nextCard?.classList.add(enter);
             nextCard?.removeAttribute('hidden');
         };
-        const next_end = () => { nextCard?.classList.remove(enter) };
+        const next_end = () => {
+            nextCard?.classList.remove(enter)
+        };
 
         animate(card, start, end)
             .then(nextCard, next_start, next_end)
             .start()
-        number.innerHTML = `${nextIndex + 1} / ${flashCards.length}`;
-        index = nextIndex;
+        number.innerHTML = `${nextIndex + 1} / ${self.flashCards.length}`;
+        self.index = nextIndex;
     };
-    const nextCard = (e) => {
+    self.nextCard = (e) => {
         e.stopPropagation()
         transition(
             'fade-out-left',
             'fade-in-right',
-            i => (i + 1) % flashCards.length)
+            i => (i + 1) % self.flashCards.length)
     };
-    const prevCard = (e) => {
+    self.prevCard = (e) => {
         e.stopPropagation()
         transition(
             'fade-out-right',
             'fade-in-left',
-            i => (i - 1 + flashCards.length) % flashCards.length)
+            i => (i - 1 + self.flashCards.length) % self.flashCards.length)
     };
-    const clickHandler = () => {
-        $.get(flashCards[index]).click()
+    self.clickHandler = () => {
+        $.get(self.flashCards[self.index]).click()
     }
-    const exportFile = async (e) => {
+    self.exportFile = async (e) => {
         e.stopPropagation();
         await exportAnkiDeck(data);
     }
-    const saveToFile = e => {
+    self.saveToFile = e => {
         e.stopPropagation();
         saveFile(JSON.stringify(data), 'questions.json', 'text/plain');
     }
-    let control =
-        <div
-            onClick={clickHandler}
-            className="control"
-            style={{opacity: OpacityValue}}
-        >
-            <div
-                className="button prev"
-                onClick={prevCard}
-            />
-            <h5 {...ref} hidden>{`${index + 1} / ${flashCards.length}`}</h5>
-            <div
-                className="button next"
-                onClick={nextCard}
-            />
-            <div
-                className="button-save"
-                onClick={saveToFile}
-            >
-                Save
-            </div>
-            <div
-                className="button-export"
-                onClick={exportFile}
-            >
-                Export
-            </div>
-        </div>
-    return $.new(
-        <section className={cls_name}>
-            {flashCards}
-            {control}
-        </section>
-    )
+
+    return $.new(template())
 }
 export default FlashCardDeck;
-
-function isMobile() {
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        // true for mobile device
-        return true;
-    }
-    return false;
-}
-
-const OpacityValue =  isMobile() ? 1 : 0

@@ -1,18 +1,10 @@
-import "./LearningMaterialList.css"
 import {preventDefaults, getFilesFromEvent} from "../../modules/common/event.js";
-import createWorker from "../../modules/WebWorker.js";
-import base64Job from "../../modules/file2base64-job.js";
-import {useState} from "react";
-import {useRecords} from "../../modules/common/storage.js";
-import {realDOM} from "../../modules/common/real_dom.js";
-
-import {createFlashCard, createFillBlankQuestions} from "../../modules/server-side-api.js";
-import {logger} from "../../modules/common/log.js";
+import styles from "./LearningMaterialList.module.css"
 
 let self = {}
 const template = () =>
-    <section className={self.cls_name}>
-        <div className="material-list">
+    <section className={styles.main}>
+        <div className={styles.container}>
             <input
                 type='file'
                 accept={'application/pdf,text/plain,audio/mpeg'}
@@ -26,8 +18,8 @@ const template = () =>
                 onDragLeave={preventDefaults}
                 onDrop={self.addLearningMaterial}
             >
-                <div className='input-area'>
-                    <div className="input-symbol"></div>
+                <div className={styles.area}>
+                    <div className={styles.symbol}></div>
                     {self.items.length > 0 ? null : <h4>ADD YOUR FILE HERE</h4>}
                     {self.items.length > 0 ? self.list : null}
                 </div>
@@ -37,22 +29,32 @@ const template = () =>
     </section>
 
 const prompt = () =>
-    <div className="prompt">
+    <div className={styles.prompt}>
         <button
             {...self.ref}
-            className="generate-button"
             onClick={self.generate}
         >
             Get flash card
         </button>
     </div>
 
+//<editor-fold desc="Scripts">
+import createWorker from "../../modules/WebWorker.js";
+import base64Job from "../../modules/file2base64-job.js";
+import {useState} from "react";
+import {useRecords} from "../../modules/common/storage.js";
+import {realDOM} from "../../modules/common/real_dom.js";
+
+import {createFlashCard, createFillBlankQuestions} from "../../modules/server-side-api.js";
+import {logger} from "../../modules/common/log.js";
+
 const LearningMaterialList = (props) => {
     const $ = realDOM(props);
     self.ref = $.useRef();
 
     const records = useRecords('base64');
-    const [counter, setCounter] = useState(0);
+    let setCounter;
+    [self.counter, setCounter] = useState(0);
     const [files, setFiles] = useState([]);
 
     function processFiles(files) {
@@ -89,21 +91,23 @@ const LearningMaterialList = (props) => {
     self.generate = async () => {
         let button = $.getByRef(self.ref);
         let text = button.innerText;
-        button.classList.add("waiting");
+        button.classList.add(styles.waiting);
         button.innerText = "Processing...";
-        await generateFlashCard();
-        button.classList.remove("waiting");
-        button.innerText = text;
+        try {
+            await generateFlashCard();
+        }
+        finally {
+            button.classList.remove(styles.waiting);
+            button.innerText = text;
+        }
     }
 
-    self.cls_name = "learning-material-list"
-    self.counter = counter;
     self.items = files.map((item, i) => <li key={i}>{item.name}</li>)
     self.list = <ul>{self.items}</ul>
 
     return template()
 }
-export default LearningMaterialList
+export default LearningMaterialList;
 
 function compose(questions) {
     const emoji = 0x1F449;
@@ -120,3 +124,4 @@ function compose(questions) {
         }
     })
 }
+//</editor-fold>

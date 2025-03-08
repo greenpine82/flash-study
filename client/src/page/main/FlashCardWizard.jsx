@@ -1,16 +1,9 @@
-import {useNavigate} from "react-router-dom";
-import { useEffect, useSyncExternalStore } from "react";
-import {useRecords} from "../../modules/common/storage.js";
-
-import logo from '../../assets/book.svg'
 import Header from "../../components/Header.jsx";
-
 import LearningMaterialList from "./LearningMaterialList.jsx";
 import FlashCardDeck from "./FlashCardDeck.jsx";
-import {getCurrentAuth} from "../../modules/server-side-api.js";
+import logo from '../../assets/book.svg'
 
 let self = {}
-
 const template = () =>
     <>
         <Header
@@ -20,6 +13,12 @@ const template = () =>
         <LearningMaterialList records={self.records} />
         { self.cards?.length > 0 ? <FlashCardDeck data={self.cards} /> : null }
     </>
+
+//<editor-fold desc="Scripts">
+import {useNavigate} from "react-router-dom";
+import { useEffect, useSyncExternalStore } from "react";
+import {useRecords} from "../../modules/common/storage.js";
+import {getCurrentAuth} from "../../modules/server-side-api.js";
 
 const FlashCardWizard = () => {
     const navigate = useNavigate();
@@ -38,5 +37,5 @@ const FlashCardWizard = () => {
 
     return template()
 }
-
 export default FlashCardWizard;
+//</editor-fold>
