@@ -1,11 +1,8 @@
 import './Header.css'
-import {realDOM} from "../modules/common/real_dom.js";
 
 const Header = (props) => {
-    const $ = realDOM(props)
-
     const css_class = 't-header'
-    return $.new(
+    return (
         <header className={css_class} >
             <img
                 src={props.logo}
@@ -15,5 +12,4 @@ const Header = (props) => {
         </header>
     )
 }
-
 export default Header;

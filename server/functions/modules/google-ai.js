@@ -5,7 +5,7 @@ export class GoogleAIClient {
 
     constructor(apiKey) {
         this.geminiAI = new GoogleGenerativeAI(apiKey);
-        this.model = this.geminiAI.getGenerativeModel({ model: 'models/gemini-1.5-flash' });
+        this.model = this.geminiAI.getGenerativeModel({ model: 'models/gemini-2.0-flash' });
     }
 
     async convertToFillBlankQuestions(questions) {

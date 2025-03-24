@@ -1,46 +1,42 @@
 export const useRecords = (...names) => {
-    const hookStr = `getHooks: hooks,`
-    let records = [];
+    let records = { getHooks: creatHooks };
     for(let key of names) {
-        records.push(`
-            get ['${key}']() {
-                return records.get('${key}')
+        const _key = key;
+        Object.defineProperty(records, _key, {
+            get() {
+                return Records[_key];
             },
-            set ['${key}'](value) {
-                records.set('${key}', value)
-                for (let listener of listeners.get('${key}')) {
+            set(value) {
+                Records[_key] = value;
+                for (let listener of Listeners[_key]) {
                     listener();
                 }
             }
-        `)
+        })
     }
-    const funcBody = 'return {' + hookStr + records.join(',') + '}'
-    return (
-        new Function('records', 'listeners', 'hooks', funcBody)
-    )(Records, Listeners, creatHooks);
+    return records;
 }
 
 const creatHooks = key => {
+    const _key = key;
     return [
-        createSubscribeFunc(key),
-        createGetSnapshotFunc(key)
+        createSubscribeFunc(_key),
+        createGetSnapshotFunc(_key)
     ]
 }
 
 const createSubscribeFunc = key => {
-    Listeners.set(key, []);
-    const _key = key;
+    Listeners[key] = [];
     return listener => {
-        Listeners.set(_key, [...Listeners.get(_key), listener]);
+        Listeners[key] = [...Listeners[key], listener];
         return () => {
-            Listeners.set(_key, Listeners.get(_key).filter(l => l !== listener));
+            Listeners[key] = Listeners[key].filter(l => l !== listener);
         };
     }
 }
 
 const createGetSnapshotFunc = key => {
-    const _key = key;
-    return () => Records.get(_key);
+    return () => Records[key];
 }
 
 const Listeners = (() => {

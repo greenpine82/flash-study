@@ -43,7 +43,7 @@ const decorate = (obj, name) => {
     return obj;
 }
 
-const tag = "o8o"
+const tag = "e8e"
 
 const getAttr = (name) => {
     let id = getId(name).toString(16);
